@@ -103,3 +103,25 @@ ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 
 plt.show()
+
+
+#Вычисление погрешности найденного решения в сравнение с аналитическим для нескольких запусков
+
+def compute_error(optimal_point):
+    analytical_solution = np.array([0, 0, 0])
+    error = np.linalg.norm(optimal_point - analytical_solution)
+    return error
+
+num_runs = 5
+errors = []
+
+for _ in range(num_runs):
+    start_point = np.random.uniform(low=-5, high=5, size=3)
+    learning_rate = 0.1  
+    num_iterations = 100  
+    optimal_point, _ = gradient_descent(start_point, learning_rate, num_iterations)
+    error = compute_error(optimal_point)
+    errors.append(error)
+
+average_error = np.mean(errors)
+print(f"Средняя погрешность: {average_error}")
